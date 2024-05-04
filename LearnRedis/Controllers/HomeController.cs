@@ -1,4 +1,5 @@
-﻿using LearnRedis.Models;
+﻿using LearnRedis.Data;
+using LearnRedis.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -7,15 +8,27 @@ namespace LearnRedis.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly DataContext dataContext;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, DataContext dataContext)
         {
             _logger = logger;
+            this.dataContext = dataContext;
         }
 
         public IActionResult Index()
         {
-            return View();
+            List<Employee> EmployeeList = new();
+            var cachedEmployee = "";
+            if(!String.IsNullOrEmpty(cachedEmployee))
+            {
+
+            }
+            else
+            {
+                EmployeeList = dataContext.Employees.ToList();
+            }
+            return View(EmployeeList);
         }
 
         public IActionResult Privacy()
